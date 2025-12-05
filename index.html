@@ -3,55 +3,534 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Ripple - A robot that paperize your SNS likes and shares</title>
+  <title>RIPPLE - Reconnecting Through Technology</title>
   <style>
-    :root { --max-width: 980px; }
-    * { box-sizing: border-box; }
-    html, body { height: 100%; margin: 0; }
+    :root { 
+      /* 可自定义背景颜色 - 修改这里来改变背景 */
+      --bg-gradient-start: #f7f7f7;
+      --bg-gradient-end: #e8e8e8;
+      --text-primary: #1d1d1f;
+      --text-secondary: #6e6e73;
+      --button-bg: #0071e3;
+      --button-hover: #0077ed;
+    }
+    
+    * { 
+      box-sizing: border-box; 
+      margin: 0;
+      padding: 0;
+    }
+    
+    html {
+      scroll-behavior: smooth;
+    }
+    
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
-      display: grid;
-      place-items: center;
-      background: #f7f7f7;
-      color: #111;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
     }
-    .card {
-      width: min(100%, var(--max-width));
+    
+    /* Language Toggle Button */
+    .lang-toggle {
+      position: fixed;
+      top: 30px;
+      right: 40px;
+      z-index: 1000;
+    }
+    
+    .lang-btn {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0,0,0,.1);
+      border-radius: 20px;
+      padding: 10px 20px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: var(--text-primary);
+      box-shadow: 0 4px 12px rgba(0,0,0,.08);
+    }
+    
+    .lang-btn:hover {
+      background: rgba(255, 255, 255, 1);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,0,0,.12);
+    }
+    
+    .lang-btn:active {
+      transform: translateY(0);
+    }
+    
+    /* Full Screen Sections */
+    section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 40px;
+      position: relative;
+    }
+    
+    /* Hero Section */
+    .hero-section {
+      background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
       text-align: center;
-      padding: 16px;
+      flex-direction: column;
     }
-    img.hero {
+    
+    .hero-content {
+      max-width: 1000px;
+      animation: fadeInUp 1s ease-out;
+    }
+    
+    .hero-title {
+      font-size: clamp(60px, 10vw, 96px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 30px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .hero-subtitle {
+      font-size: clamp(24px, 4vw, 32px);
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 24px;
+      line-height: 1.3;
+    }
+    
+    .hero-description {
+      font-size: clamp(18px, 2.5vw, 24px);
+      color: var(--text-secondary);
+      max-width: 900px;
+      margin: 0 auto 48px;
+      line-height: 1.6;
+    }
+    
+    .vision-box {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      padding: 48px;
+      max-width: 800px;
+      margin: 0 auto;
+      box-shadow: 0 10px 40px rgba(0,0,0,.1);
+    }
+    
+    .vision-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--text-primary);
+    }
+    
+    .vision-text {
+      font-size: 19px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+    
+    /* Phase Sections */
+    .phase-section {
+      background: #fff;
+      flex-direction: column;
+      opacity: 0.3;
+      transition: opacity 0.8s ease-out;
+    }
+    
+    .phase-section.in-view {
+      opacity: 1;
+    }
+    
+    .phase-section:nth-child(even) {
+      background: linear-gradient(135deg, #fafafa 0%, #f0f0f0 100%);
+    }
+    
+    .phase-content {
+      max-width: 1200px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    
+    .phase-text {
+      padding: 40px;
+    }
+    
+    .phase-label {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--button-bg);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 16px;
+    }
+    
+    .phase-title {
+      font-size: clamp(36px, 5vw, 48px);
+      font-weight: 700;
+      margin-bottom: 24px;
+      color: var(--text-primary);
+      line-height: 1.2;
+    }
+    
+    .phase-description {
+      font-size: clamp(18px, 2vw, 21px);
+      color: var(--text-secondary);
+      margin-bottom: 40px;
+      line-height: 1.6;
+    }
+    
+    .phase-image {
+      position: relative;
+      overflow: hidden;
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.15);
+    }
+    
+    .phase-image img {
       width: 100%;
       height: auto;
-      border-radius: 12px;
-      box-shadow: 0 6px 18px rgba(0,0,0,.12);
+      display: block;
+      transition: transform 0.5s ease;
     }
+    
+    .phase-image:hover img {
+      transform: scale(1.05);
+    }
+    
+    /* Buttons */
     a.button {
       display: inline-block;
-      margin-top: 20px;
-      padding: 12px 20px;
-      border-radius: 999px;
+      padding: 16px 40px;
+      border-radius: 980px;
       text-decoration: none;
-      border: 1px solid rgba(0,0,0,.12);
-      box-shadow: 0 4px 12px rgba(0,0,0,.08);
       font-weight: 600;
+      font-size: 18px;
+      transition: all 0.3s ease;
+      background: var(--button-bg);
+      color: white;
+      border: none;
+      box-shadow: 0 6px 20px rgba(0,113,227,.3);
     }
-    a.button:focus, a.button:hover {
+    
+    a.button:hover {
+      background: var(--button-hover);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(0,113,227,.4);
+    }
+    
+    a.button:active {
       transform: translateY(-1px);
     }
-    footer { margin-top: 14px; font-size: 12px; color: #666; }
+    
+    a.button::after {
+      content: ' ▶';
+      margin-left: 8px;
+    }
+    
+    /* Footer */
+    footer { 
+      text-align: center;
+      padding: 60px 40px;
+      font-size: 15px;
+      color: var(--text-secondary);
+      background: #fafafa;
+    }
+    
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* Scroll-triggered animations */
+    .phase-text, .phase-image {
+      opacity: 0;
+      transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .phase-text {
+      transform: translateX(-60px);
+    }
+    
+    .phase-image {
+      transform: translateX(60px);
+    }
+    
+    /* Reverse direction for even sections (Phase 2) */
+    .phase-section:nth-child(even) .phase-text {
+      transform: translateX(60px);
+    }
+    
+    .phase-section:nth-child(even) .phase-image {
+      transform: translateX(-60px);
+    }
+    
+    /* When section is in view */
+    .phase-section.in-view .phase-text {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    
+    .phase-section.in-view .phase-image {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    
+    /* Stagger the animations slightly */
+    .phase-section.in-view .phase-text {
+      transition-delay: 0.1s;
+    }
+    
+    .phase-section.in-view .phase-image {
+      transition-delay: 0.3s;
+    }
+    
+    /* Scroll Indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: bounce 2s infinite;
+    }
+    
+    .scroll-indicator::before {
+      content: '↓';
+      font-size: 32px;
+      color: var(--text-secondary);
+      opacity: 0.6;
+    }
+    
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateX(-50%) translateY(0);
+      }
+      40% {
+        transform: translateX(-50%) translateY(-10px);
+      }
+      60% {
+        transform: translateX(-50%) translateY(-5px);
+      }
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .phase-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      
+      .phase-text {
+        padding: 20px;
+        text-align: center;
+      }
+      
+      /* Simplify animations on mobile - fade up instead of slide sideways */
+      .phase-text, 
+      .phase-section:nth-child(even) .phase-text {
+        transform: translateX(0) translateY(30px);
+      }
+      
+      .phase-image,
+      .phase-section:nth-child(even) .phase-image {
+        transform: translateX(0) translateY(30px);
+      }
+    }
+    
+    @media (max-width: 768px) {
+      section {
+        padding: 60px 20px;
+      }
+      
+      .lang-toggle {
+        top: 20px;
+        right: 20px;
+      }
+      
+      .lang-btn {
+        padding: 8px 16px;
+        font-size: 14px;
+      }
+      
+      .vision-box {
+        padding: 32px 24px;
+      }
+      
+      .phase-content {
+        gap: 30px;
+      }
+    }
   </style>
 </head>
 <body>
-  <main class="card">
-    <img class="hero" src="assets/ripple.png" alt="Your featured image">
-    <div>
-      <!-- Replace the href with your YouTube video or channel URL -->
-      <a class="button" id="first-movie" href="https://youtu.be/6QjgwHpSxbk" target="_blank" rel="noopener">First Movie ▶</a>
+  <!-- Language Toggle Button -->
+  <div class="lang-toggle">
+    <button class="lang-btn" onclick="toggleLanguage()">
+      <span id="lang-display">日本語</span>
+    </button>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title">RIPPLE</h1>
+      <p class="hero-subtitle" 
+         data-en="Technology divided us. Technology can reconnect us."
+         data-ja="テクノロジーが私たちを分断した。テクノロジーが私たちを再びつなぐ。">
+        Technology divided us. Technology can reconnect us.
+      </p>
+      <p class="hero-description"
+         data-en="A communication design project exploring how digital isolation traps us in endless observation, and how technology—when designed with intention—can help us break free and reconnect."
+         data-ja="デジタル孤立が私たちを終わりのない観察に閉じ込める様子を探求し、意図を持ってデザインされたテクノロジーがどのように私たちを解放し、再接続できるかを示すコミュニケーションデザインプロジェクト。">
+        A communication design project exploring how digital isolation traps us in endless observation, and how technology—when designed with intention—can help us break free and reconnect.
+      </p>
+      
+      <div class="vision-box">
+        <h3 class="vision-title"
+            data-en="Our Vision"
+            data-ja="私たちのビジョン">
+          Our Vision
+        </h3>
+        <p class="vision-text"
+           data-en="Through approachable robots and thoughtful design, RIPPLE makes visible the invisible patterns of our digital lives. From the prison of "likes" and "saves" to the possibility of genuine emotional connection across distances—we explore how awareness can lead to change."
+           data-ja="親しみやすいロボットと思慮深いデザインを通じて、RIPPLEは私たちのデジタルライフの見えないパターンを可視化します。「いいね」や「保存」の牢獄から、距離を超えた真の感情的つながりの可能性まで—気づきがいかに変化をもたらすかを探求します。">
+          Through approachable robots and thoughtful design, RIPPLE makes visible the invisible patterns of our digital lives. From the prison of "likes" and "saves" to the possibility of genuine emotional connection across distances—we explore how awareness can lead to change.
+        </p>
+      </div>
     </div>
-    <footer>© <span id="year"></span> Shiqi Yu</footer>
-  </main>
+    
+    <div class="scroll-indicator"></div>
+  </section>
+
+  <!-- Phase 1 Section -->
+  <section class="phase-section">
+    <div class="phase-content">
+      <div class="phase-text">
+        <p class="phase-label"
+           data-en="Phase 1"
+           data-ja="フェーズ1">
+          Phase 1
+        </p>
+        <h2 class="phase-title"
+            data-en="The Problem"
+            data-ja="問題">
+          The Problem
+        </h2>
+        <p class="phase-description"
+           data-en="Watch how the robot becomes trapped by the accumulation of social media "likes" and "saves"—a metaphor for how digital preparation activities imprison us in endless observation rather than real action."
+           data-ja="ソーシャルメディアの「いいね」や「保存」の蓄積によってロボットが閉じ込められる様子をご覧ください。これは、デジタルの準備活動が私たちを実際の行動ではなく、終わりのない観察に閉じ込める様子のメタファーです。">
+          Watch how the robot becomes trapped by the accumulation of social media "likes" and "saves"—a metaphor for how digital preparation activities imprison us in endless observation rather than real action.
+        </p>
+        <a class="button" href="https://youtu.be/6QjgwHpSxbk" target="_blank" rel="noopener">
+          <span data-en="Watch Phase 1" data-ja="フェーズ1を見る">Watch Phase 1</span>
+        </a>
+      </div>
+      <div class="phase-image">
+        <!-- Phase 1 の画像 - あなたの画像パスに置き換えてください -->
+        <img src="assets/ripple.png" alt="Phase 1 - The Problem">
+      </div>
+    </div>
+  </section>
+
+  <!-- Phase 2 Section -->
+  <section class="phase-section">
+    <div class="phase-content">
+      <div class="phase-image">
+        <!-- Phase 2 の画像 - あなたの画像パスに置き換えてください -->
+        <img src="assets/ripple.png" alt="Phase 2 - The Possibility">
+      </div>
+      <div class="phase-text">
+        <p class="phase-label"
+           data-en="Phase 2"
+           data-ja="フェーズ2">
+          Phase 2
+        </p>
+        <h2 class="phase-title"
+            data-en="The Possibility"
+            data-ja="可能性">
+          The Possibility
+        </h2>
+        <p class="phase-description"
+           data-en="Experience the "6 Degrees of RIPPLE"—a global relay showing how emotional gestures can travel through robots across cities from Tokyo to Sydney, demonstrating technology's power to reconnect us when designed with intention."
+           data-ja="「6 Degrees of RIPPLE」を体験してください。東京からシドニーまで、都市を越えてロボットを通じて感情的なジェスチャーが伝わるグローバルリレー。意図を持ってデザインされたテクノロジーが私たちを再接続する力を示します。">
+          Experience the "6 Degrees of RIPPLE"—a global relay showing how emotional gestures can travel through robots across cities from Tokyo to Sydney, demonstrating technology's power to reconnect us when designed with intention.
+        </p>
+        <a class="button" href="https://youtu.be/YOUR_SECOND_VIDEO_ID" target="_blank" rel="noopener">
+          <span data-en="Watch Phase 2" data-ja="フェーズ2を見る">Watch Phase 2</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    © <span id="year"></span> Shiqi Yu • RIPPLE Project
+  </footer>
+  
   <script>
+    // Language toggle functionality
+    let currentLang = 'en';
+    
+    function toggleLanguage() {
+      currentLang = currentLang === 'en' ? 'ja' : 'en';
+      updateLanguage();
+    }
+    
+    function updateLanguage() {
+      const elements = document.querySelectorAll('[data-en][data-ja]');
+      const langDisplay = document.getElementById('lang-display');
+      
+      elements.forEach(element => {
+        const text = currentLang === 'en' ? element.getAttribute('data-en') : element.getAttribute('data-ja');
+        element.textContent = text;
+      });
+      
+      // Update button text
+      langDisplay.textContent = currentLang === 'en' ? '日本語' : 'English';
+      
+      // Update HTML lang attribute
+      document.documentElement.lang = currentLang;
+    }
+    
+    // Scroll-triggered animations using Intersection Observer
+    const observerOptions = {
+      root: null,
+      threshold: 0.2, // Trigger when 20% of the element is visible
+      rootMargin: '0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+        }
+      });
+    }, observerOptions);
+    
+    // Observe all phase sections
+    document.addEventListener('DOMContentLoaded', () => {
+      const phaseSections = document.querySelectorAll('.phase-section');
+      phaseSections.forEach(section => {
+        observer.observe(section);
+      });
+    });
+    
     // Keeps the year up to date
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
