@@ -87,6 +87,15 @@
       animation: fadeInUp 1s ease-out;
     }
     
+    .hero-logo {
+      max-width: clamp(300px, 50vw, 600px);
+      height: auto;
+      margin-bottom: 30px;
+      animation: fadeIn 1.2s ease-out;
+      filter: drop-shadow(0 4px 20px rgba(0,0,0,.1));
+    }
+    
+    /* Fallback text title if logo doesn't load */
     .hero-title {
       font-size: clamp(60px, 10vw, 96px);
       font-weight: 700;
@@ -96,6 +105,7 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      display: none;
     }
     
     .hero-subtitle {
@@ -271,6 +281,126 @@
       margin-left: 8px;
     }
     
+    /* Share Section */
+    .share-section {
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(0,0,0,.08);
+    }
+    
+    .share-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    .share-buttons {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    
+    .share-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(0,0,0,.12);
+      background: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 18px;
+      text-decoration: none;
+    }
+    
+    .share-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,.12);
+    }
+    
+    .share-btn.twitter {
+      color: #1DA1F2;
+      border-color: #1DA1F2;
+    }
+    
+    .share-btn.twitter:hover {
+      background: #1DA1F2;
+      color: white;
+    }
+    
+    .share-btn.facebook {
+      color: #1877F2;
+      border-color: #1877F2;
+    }
+    
+    .share-btn.facebook:hover {
+      background: #1877F2;
+      color: white;
+    }
+    
+    .share-btn.linkedin {
+      color: #0A66C2;
+      border-color: #0A66C2;
+    }
+    
+    .share-btn.linkedin:hover {
+      background: #0A66C2;
+      color: white;
+    }
+    
+    .share-btn.copy {
+      color: #666;
+      border-color: #666;
+    }
+    
+    .share-btn.copy:hover {
+      background: #666;
+      color: white;
+    }
+    
+    .share-btn.copy.copied {
+      background: #34C759;
+      border-color: #34C759;
+      color: white;
+    }
+    
+    /* Share Counter */
+    .share-counter {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 16px;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+    
+    .counter-number {
+      font-weight: 700;
+      color: var(--button-bg);
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+    
+    .counter-icon {
+      font-size: 16px;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.6;
+      }
+    }
+    
     /* Footer */
     footer { 
       text-align: center;
@@ -289,6 +419,15 @@
       to {
         opacity: 1;
         transform: translateY(0);
+      }
+    }
+    
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
       }
     }
     
@@ -384,6 +523,15 @@
         min-height: 400px;
       }
       
+      /* Center share section on mobile */
+      .share-section {
+        text-align: center;
+      }
+      
+      .share-title {
+        text-align: center;
+      }
+      
       /* Remove overlay on mobile for better image visibility */
       .phase-section::before {
         display: none;
@@ -404,6 +552,10 @@
     @media (max-width: 768px) {
       .hero-section {
         padding: 60px 20px;
+      }
+      
+      .hero-logo {
+        max-width: clamp(200px, 70vw, 400px);
       }
       
       .lang-toggle {
@@ -429,6 +581,19 @@
         height: 50vh;
         min-height: 350px;
       }
+      
+      .share-section {
+        width: 100%;
+      }
+      
+      .share-buttons {
+        justify-content: center;
+      }
+      
+      .share-counter {
+        justify-content: center;
+        text-align: center;
+      }
     }
   </style>
 </head>
@@ -443,7 +608,7 @@
   <!-- Hero Section -->
   <section class="hero-section">
     <div class="hero-content">
-      <h1 class="hero-title">RIPPLE</h1>
+      <img src="assets/logo.png" alt="RIPPLE" class="hero-logo">
       <p class="hero-subtitle" 
          data-en="Technology divided us. Technology can reconnect us."
          data-ja="テクノロジーが私たちを分断した。テクノロジーが私たちを再びつなぐ。">
@@ -494,10 +659,34 @@
         <a class="button" href="https://youtu.be/6QjgwHpSxbk" target="_blank" rel="noopener">
           <span data-en="Watch Phase 1" data-ja="フェーズ1を見る">Watch Phase 1</span>
         </a>
+        
+        <!-- Share Section -->
+        <div class="share-section">
+          <p class="share-title" data-en="Share this video" data-ja="この動画をシェア">Share this video</p>
+          <div class="share-buttons">
+            <a class="share-btn twitter" onclick="shareToTwitter('phase1')" title="Share on Twitter">
+              <span>𝕏</span>
+            </a>
+            <a class="share-btn facebook" onclick="shareToFacebook('phase1')" title="Share on Facebook">
+              <span>f</span>
+            </a>
+            <a class="share-btn linkedin" onclick="shareToLinkedIn('phase1')" title="Share on LinkedIn">
+              <span>in</span>
+            </a>
+            <a class="share-btn copy" onclick="copyLink('phase1')" title="Copy link">
+              <span id="copy-icon-phase1">🔗</span>
+            </a>
+          </div>
+          <div class="share-counter">
+            <span class="counter-icon">📤</span>
+            <span class="counter-number" id="counter-phase1">1,247</span>
+            <span data-en="people shared this" data-ja="人がシェアしました">people shared this</span>
+          </div>
+        </div>
       </div>
       <div class="phase-image">
         <!-- Phase 1 の画像 - あなたの画像パスに置き換えてください -->
-        <img src="assets/ripple.png" alt="Phase 1 - The Problem">
+        <img src="assets/phase1.png" alt="Phase 1 - The Problem">
       </div>
     </div>
   </section>
@@ -507,7 +696,7 @@
     <div class="phase-content">
       <div class="phase-image">
         <!-- Phase 2 の画像 - あなたの画像パスに置き換えてください -->
-        <img src="assets/ripple.png" alt="Phase 2 - The Possibility">
+        <img src="assets/phase2.png" alt="Phase 2 - The Possibility">
       </div>
       <div class="phase-text">
         <p class="phase-label"
@@ -528,6 +717,30 @@
         <a class="button" href="https://youtu.be/YOUR_SECOND_VIDEO_ID" target="_blank" rel="noopener">
           <span data-en="Watch Phase 2" data-ja="フェーズ2を見る">Watch Phase 2</span>
         </a>
+        
+        <!-- Share Section -->
+        <div class="share-section">
+          <p class="share-title" data-en="Share this video" data-ja="この動画をシェア">Share this video</p>
+          <div class="share-buttons">
+            <a class="share-btn twitter" onclick="shareToTwitter('phase2')" title="Share on Twitter">
+              <span>𝕏</span>
+            </a>
+            <a class="share-btn facebook" onclick="shareToFacebook('phase2')" title="Share on Facebook">
+              <span>f</span>
+            </a>
+            <a class="share-btn linkedin" onclick="shareToLinkedIn('phase2')" title="Share on LinkedIn">
+              <span>in</span>
+            </a>
+            <a class="share-btn copy" onclick="copyLink('phase2')" title="Copy link">
+              <span id="copy-icon-phase2">🔗</span>
+            </a>
+          </div>
+          <div class="share-counter">
+            <span class="counter-icon">📤</span>
+            <span class="counter-number" id="counter-phase2">892</span>
+            <span data-en="people shared this" data-ja="人がシェアしました">people shared this</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -538,6 +751,101 @@
   </footer>
   
   <script>
+    // Video URLs for sharing
+    const videoUrls = {
+      phase1: 'https://youtu.be/6QjgwHpSxbk',
+      phase2: 'https://youtu.be/YOUR_SECOND_VIDEO_ID'
+    };
+    
+    // Share counters - these would normally come from a backend
+    let shareCounts = {
+      phase1: parseInt(localStorage.getItem('shareCount_phase1') || '1247'),
+      phase2: parseInt(localStorage.getItem('shareCount_phase2') || '892')
+    };
+    
+    // Update counter display
+    function updateCounter(phase) {
+      const counterElement = document.getElementById(`counter-${phase}`);
+      if (counterElement) {
+        shareCounts[phase]++;
+        localStorage.setItem(`shareCount_${phase}`, shareCounts[phase]);
+        counterElement.textContent = shareCounts[phase].toLocaleString();
+        
+        // Add animation
+        counterElement.style.transform = 'scale(1.2)';
+        counterElement.style.color = '#34C759';
+        setTimeout(() => {
+          counterElement.style.transform = 'scale(1)';
+          counterElement.style.color = '';
+        }, 300);
+      }
+    }
+    
+    // Share to Twitter
+    function shareToTwitter(phase) {
+      const url = videoUrls[phase];
+      const text = phase === 'phase1' 
+        ? 'Check out RIPPLE Phase 1: The Problem - How digital isolation traps us in endless observation'
+        : 'Experience RIPPLE Phase 2: The Possibility - Technology can reconnect us across distances';
+      const shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
+      window.open(shareUrl, '_blank', 'width=550,height=420');
+      updateCounter(phase);
+    }
+    
+    // Share to Facebook
+    function shareToFacebook(phase) {
+      const url = videoUrls[phase];
+      const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+      window.open(shareUrl, '_blank', 'width=550,height=420');
+      updateCounter(phase);
+    }
+    
+    // Share to LinkedIn
+    function shareToLinkedIn(phase) {
+      const url = videoUrls[phase];
+      const shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+      window.open(shareUrl, '_blank', 'width=550,height=420');
+      updateCounter(phase);
+    }
+    
+    // Copy link to clipboard
+    function copyLink(phase) {
+      const url = videoUrls[phase];
+      const copyIcon = document.getElementById(`copy-icon-${phase}`);
+      const copyBtn = copyIcon.parentElement;
+      
+      navigator.clipboard.writeText(url).then(() => {
+        // Update icon to show success
+        copyIcon.textContent = '✓';
+        copyBtn.classList.add('copied');
+        updateCounter(phase);
+        
+        // Reset after 2 seconds
+        setTimeout(() => {
+          copyIcon.textContent = '🔗';
+          copyBtn.classList.remove('copied');
+        }, 2000);
+      }).catch(err => {
+        console.error('Failed to copy:', err);
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = url;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        
+        copyIcon.textContent = '✓';
+        copyBtn.classList.add('copied');
+        updateCounter(phase);
+        
+        setTimeout(() => {
+          copyIcon.textContent = '🔗';
+          copyBtn.classList.remove('copied');
+        }, 2000);
+      });
+    }
+    
     // Language toggle functionality
     let currentLang = 'en';
     
@@ -577,12 +885,17 @@
       });
     }, observerOptions);
     
-    // Observe all phase sections
+    // Initialize on page load
     document.addEventListener('DOMContentLoaded', () => {
+      // Observe all phase sections
       const phaseSections = document.querySelectorAll('.phase-section');
       phaseSections.forEach(section => {
         observer.observe(section);
       });
+      
+      // Update counter displays
+      document.getElementById('counter-phase1').textContent = shareCounts.phase1.toLocaleString();
+      document.getElementById('counter-phase2').textContent = shareCounts.phase2.toLocaleString();
     });
     
     // Keeps the year up to date
