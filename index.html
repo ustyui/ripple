@@ -70,7 +70,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 80px 40px;
+      padding: 0;
       position: relative;
     }
     
@@ -79,6 +79,7 @@
       background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
       text-align: center;
       flex-direction: column;
+      padding: 80px 40px;
     }
     
     .hero-content {
@@ -142,6 +143,7 @@
       flex-direction: column;
       opacity: 0.3;
       transition: opacity 0.8s ease-out;
+      position: relative;
     }
     
     .phase-section.in-view {
@@ -152,17 +154,46 @@
       background: linear-gradient(135deg, #fafafa 0%, #f0f0f0 100%);
     }
     
+    /* Optional: Add subtle overlay to phase sections for better text contrast */
+    .phase-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, 
+        rgba(255,255,255,0.95) 0%, 
+        rgba(255,255,255,0.85) 40%, 
+        rgba(255,255,255,0) 60%);
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    .phase-section:nth-child(even)::before {
+      background: linear-gradient(-90deg, 
+        rgba(250,250,250,0.95) 0%, 
+        rgba(250,250,250,0.85) 40%, 
+        rgba(250,250,250,0) 60%);
+    }
+    
     .phase-content {
-      max-width: 1200px;
+      max-width: 100%;
       width: 100%;
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
+      grid-template-columns: 40fr 60fr;
+      gap: 0;
+      align-items: stretch;
+      height: 100%;
     }
     
     .phase-text {
-      padding: 40px;
+      padding: 80px 60px;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
     }
     
     .phase-label {
@@ -175,15 +206,15 @@
     }
     
     .phase-title {
-      font-size: clamp(36px, 5vw, 48px);
+      font-size: clamp(36px, 5vw, 56px);
       font-weight: 700;
       margin-bottom: 24px;
       color: var(--text-primary);
-      line-height: 1.2;
+      line-height: 1.1;
     }
     
     .phase-description {
-      font-size: clamp(18px, 2vw, 21px);
+      font-size: clamp(18px, 2vw, 22px);
       color: var(--text-secondary);
       margin-bottom: 40px;
       line-height: 1.6;
@@ -192,19 +223,22 @@
     .phase-image {
       position: relative;
       overflow: hidden;
-      border-radius: 24px;
-      box-shadow: 0 20px 60px rgba(0,0,0,.15);
+      height: 80vh;
+      min-height: 600px;
+      border-radius: 0;
+      box-shadow: none;
     }
     
     .phase-image img {
       width: 100%;
-      height: auto;
+      height: 100%;
+      object-fit: cover;
       display: block;
-      transition: transform 0.5s ease;
+      transition: transform 0.8s ease;
     }
     
     .phase-image:hover img {
-      transform: scale(1.05);
+      transform: scale(1.08);
     }
     
     /* Buttons */
@@ -333,12 +367,26 @@
     @media (max-width: 1024px) {
       .phase-content {
         grid-template-columns: 1fr;
-        gap: 40px;
+        gap: 0;
+        max-width: 100%;
       }
       
       .phase-text {
-        padding: 20px;
+        padding: 40px 30px;
         text-align: center;
+        order: 2;
+        align-items: center;
+      }
+      
+      .phase-image {
+        order: 1;
+        height: 60vh;
+        min-height: 400px;
+      }
+      
+      /* Remove overlay on mobile for better image visibility */
+      .phase-section::before {
+        display: none;
       }
       
       /* Simplify animations on mobile - fade up instead of slide sideways */
@@ -354,7 +402,7 @@
     }
     
     @media (max-width: 768px) {
-      section {
+      .hero-section {
         padding: 60px 20px;
       }
       
@@ -372,8 +420,14 @@
         padding: 32px 24px;
       }
       
-      .phase-content {
-        gap: 30px;
+      .phase-text {
+        padding: 40px 20px;
+        align-items: center;
+      }
+      
+      .phase-image {
+        height: 50vh;
+        min-height: 350px;
       }
     }
   </style>
