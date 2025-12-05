@@ -6,13 +6,15 @@
   <title>RIPPLE - Reconnecting Through Technology</title>
   <style>
     :root { 
-      /* 可自定义背景颜色 - 修改这里来改变背景 */
-      --bg-gradient-start: #f7f7f7;
-      --bg-gradient-end: #e8e8e8;
-      --text-primary: #1d1d1f;
-      --text-secondary: #6e6e73;
+      /* Dark theme - "Light in the Darkness" */
+      --bg-dark: #0a0a0f;
+      --bg-dark-secondary: #12121a;
+      --text-primary: #f5f5f7;
+      --text-secondary: #a1a1a6;
       --button-bg: #0071e3;
       --button-hover: #0077ed;
+      --accent-light: #667eea;
+      --accent-glow: rgba(102, 126, 234, 0.3);
     }
     
     * { 
@@ -30,6 +32,28 @@
       color: var(--text-primary);
       line-height: 1.6;
       overflow-x: hidden;
+      background: var(--bg-dark);
+      position: relative;
+    }
+    
+    /* Subtle star field effect */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 1%),
+        radial-gradient(circle at 90% 80%, rgba(255, 255, 255, 0.03) 0%, transparent 1%),
+        radial-gradient(circle at 50% 50%, rgba(102, 126, 234, 0.04) 0%, transparent 1%),
+        radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.02) 0%, transparent 1%),
+        radial-gradient(circle at 70% 30%, rgba(118, 75, 162, 0.03) 0%, transparent 1%);
+      background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.6;
     }
     
     /* Language Toggle Button */
@@ -41,9 +65,9 @@
     }
     
     .lang-btn {
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(18, 18, 26, 0.8);
       backdrop-filter: blur(10px);
-      border: 1px solid rgba(0,0,0,.1);
+      border: 1px solid rgba(102, 126, 234, 0.3);
       border-radius: 20px;
       padding: 10px 20px;
       font-size: 15px;
@@ -51,13 +75,18 @@
       cursor: pointer;
       transition: all 0.3s ease;
       color: var(--text-primary);
-      box-shadow: 0 4px 12px rgba(0,0,0,.08);
+      box-shadow: 
+        0 4px 12px rgba(0,0,0,.3),
+        0 0 20px rgba(102, 126, 234, 0.2);
     }
     
     .lang-btn:hover {
-      background: rgba(255, 255, 255, 1);
+      background: rgba(102, 126, 234, 0.2);
       transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(0,0,0,.12);
+      box-shadow: 
+        0 6px 16px rgba(0,0,0,.4),
+        0 0 30px rgba(102, 126, 234, 0.4);
+      border-color: rgba(102, 126, 234, 0.5);
     }
     
     .lang-btn:active {
@@ -72,27 +101,101 @@
       justify-content: center;
       padding: 0;
       position: relative;
+      z-index: 1;
     }
     
     /* Hero Section */
     .hero-section {
-      background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+      background: 
+        radial-gradient(ellipse at center, 
+          rgba(102, 126, 234, 0.15) 0%, 
+          rgba(118, 75, 162, 0.1) 25%,
+          rgba(10, 10, 15, 0.95) 60%,
+          #0a0a0f 100%),
+        linear-gradient(135deg, #0a0a0f 0%, #12121a 100%);
       text-align: center;
       flex-direction: column;
       padding: 80px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    /* Animated light rays */
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 150%;
+      height: 150%;
+      background: 
+        repeating-conic-gradient(
+          from 0deg at 50% 50%,
+          transparent 0deg,
+          rgba(102, 126, 234, 0.03) 2deg,
+          transparent 4deg,
+          transparent 8deg
+        );
+      animation: rotate 60s linear infinite;
+      pointer-events: none;
+      opacity: 0.6;
+    }
+    
+    /* Glowing particles effect */
+    .hero-section::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        radial-gradient(circle at 20% 30%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(118, 75, 162, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.02) 0%, transparent 50%);
+      animation: float 20s ease-in-out infinite;
+      pointer-events: none;
+    }
+    
+    @keyframes rotate {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+    
+    @keyframes float {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.6; }
     }
     
     .hero-content {
       max-width: 1000px;
       animation: fadeInUp 1s ease-out;
+      position: relative;
+      z-index: 2;
     }
     
     .hero-logo {
       max-width: clamp(300px, 50vw, 600px);
       height: auto;
       margin-bottom: 30px;
-      animation: fadeIn 1.2s ease-out;
-      filter: drop-shadow(0 4px 20px rgba(0,0,0,.1));
+      animation: fadeIn 1.2s ease-out, logoGlow 3s ease-in-out infinite;
+      filter: 
+        drop-shadow(0 0 30px rgba(102, 126, 234, 0.4))
+        drop-shadow(0 0 60px rgba(118, 75, 162, 0.3));
+    }
+    
+    @keyframes logoGlow {
+      0%, 100% {
+        filter: 
+          drop-shadow(0 0 30px rgba(102, 126, 234, 0.4))
+          drop-shadow(0 0 60px rgba(118, 75, 162, 0.3));
+      }
+      50% {
+        filter: 
+          drop-shadow(0 0 40px rgba(102, 126, 234, 0.6))
+          drop-shadow(0 0 80px rgba(118, 75, 162, 0.5));
+      }
     }
     
     /* Fallback text title if logo doesn't load */
@@ -125,13 +228,17 @@
     }
     
     .vision-box {
-      background: rgba(255, 255, 255, 0.7);
+      background: rgba(18, 18, 26, 0.8);
       backdrop-filter: blur(20px);
       border-radius: 24px;
       padding: 48px;
       max-width: 800px;
       margin: 0 auto;
-      box-shadow: 0 10px 40px rgba(0,0,0,.1);
+      box-shadow: 
+        0 10px 40px rgba(0,0,0,.5),
+        inset 0 0 0 1px rgba(102, 126, 234, 0.2),
+        0 0 60px rgba(102, 126, 234, 0.15);
+      border: 1px solid rgba(102, 126, 234, 0.2);
     }
     
     .vision-title {
@@ -139,6 +246,10 @@
       font-weight: 700;
       margin-bottom: 16px;
       color: var(--text-primary);
+      background: linear-gradient(135deg, #667eea 0%, #a78bfa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
     
     .vision-text {
@@ -149,7 +260,7 @@
     
     /* Phase Sections */
     .phase-section {
-      background: #fff;
+      background: var(--bg-dark);
       flex-direction: column;
       opacity: 0.3;
       transition: opacity 0.8s ease-out;
@@ -161,10 +272,10 @@
     }
     
     .phase-section:nth-child(even) {
-      background: linear-gradient(135deg, #fafafa 0%, #f0f0f0 100%);
+      background: var(--bg-dark-secondary);
     }
     
-    /* Optional: Add subtle overlay to phase sections for better text contrast */
+    /* Subtle light gradient overlay for better text readability */
     .phase-section::before {
       content: '';
       position: absolute;
@@ -173,18 +284,34 @@
       right: 0;
       bottom: 0;
       background: linear-gradient(90deg, 
-        rgba(255,255,255,0.95) 0%, 
-        rgba(255,255,255,0.85) 40%, 
-        rgba(255,255,255,0) 60%);
+        rgba(10,10,15,0.95) 0%, 
+        rgba(10,10,15,0.85) 40%, 
+        rgba(10,10,15,0) 60%);
       pointer-events: none;
       z-index: 1;
     }
     
     .phase-section:nth-child(even)::before {
       background: linear-gradient(-90deg, 
-        rgba(250,250,250,0.95) 0%, 
-        rgba(250,250,250,0.85) 40%, 
-        rgba(250,250,250,0) 60%);
+        rgba(18,18,26,0.95) 0%, 
+        rgba(18,18,26,0.85) 40%, 
+        rgba(18,18,26,0) 60%);
+    }
+    
+    /* Add subtle glow effect on each phase section */
+    .phase-section::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(ellipse at center, 
+        rgba(102, 126, 234, 0.08) 0%, 
+        transparent 70%);
+      pointer-events: none;
+      z-index: 0;
     }
     
     .phase-content {
@@ -209,10 +336,11 @@
     .phase-label {
       font-size: 16px;
       font-weight: 600;
-      color: var(--button-bg);
+      color: #667eea;
       text-transform: uppercase;
       letter-spacing: 0.1em;
       margin-bottom: 16px;
+      text-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
     }
     
     .phase-title {
@@ -236,7 +364,9 @@
       height: 80vh;
       min-height: 600px;
       border-radius: 0;
-      box-shadow: none;
+      box-shadow: 
+        0 0 60px rgba(102, 126, 234, 0.2),
+        inset 0 0 0 1px rgba(102, 126, 234, 0.1);
     }
     
     .phase-image img {
@@ -245,10 +375,24 @@
       object-fit: cover;
       display: block;
       transition: transform 0.8s ease;
+      filter: brightness(0.9) contrast(1.1);
     }
     
     .phase-image:hover img {
       transform: scale(1.08);
+      filter: brightness(1) contrast(1.1);
+    }
+    
+    /* Add subtle glow around images */
+    .phase-image::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      box-shadow: inset 0 0 100px rgba(102, 126, 234, 0.15);
+      pointer-events: none;
     }
     
     /* Buttons */
@@ -263,13 +407,17 @@
       background: var(--button-bg);
       color: white;
       border: none;
-      box-shadow: 0 6px 20px rgba(0,113,227,.3);
+      box-shadow: 
+        0 6px 20px rgba(0,113,227,.4),
+        0 0 40px rgba(0,113,227,.3);
     }
     
     a.button:hover {
       background: var(--button-hover);
       transform: translateY(-3px);
-      box-shadow: 0 10px 30px rgba(0,113,227,.4);
+      box-shadow: 
+        0 10px 30px rgba(0,113,227,.5),
+        0 0 60px rgba(0,113,227,.5);
     }
     
     a.button:active {
@@ -285,7 +433,7 @@
     .share-section {
       margin-top: 32px;
       padding-top: 24px;
-      border-top: 1px solid rgba(0,0,0,.08);
+      border-top: 1px solid rgba(255,255,255,.1);
     }
     
     .share-title {
@@ -311,17 +459,19 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 1px solid rgba(0,0,0,.12);
-      background: white;
+      border: 1px solid rgba(255,255,255,.15);
+      background: rgba(255,255,255,.05);
       cursor: pointer;
       transition: all 0.3s ease;
       font-size: 18px;
       text-decoration: none;
+      backdrop-filter: blur(10px);
     }
     
     .share-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,0,0,.12);
+      box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+      background: rgba(255,255,255,.1);
     }
     
     .share-btn.twitter {
@@ -407,7 +557,8 @@
       padding: 60px 40px;
       font-size: 15px;
       color: var(--text-secondary);
-      background: #fafafa;
+      background: var(--bg-dark-secondary);
+      border-top: 1px solid rgba(255,255,255,.05);
     }
     
     /* Animations */
@@ -481,13 +632,15 @@
       left: 50%;
       transform: translateX(-50%);
       animation: bounce 2s infinite;
+      z-index: 3;
     }
     
     .scroll-indicator::before {
       content: '↓';
       font-size: 32px;
       color: var(--text-secondary);
-      opacity: 0.6;
+      opacity: 0.8;
+      filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.5));
     }
     
     @keyframes bounce {
@@ -532,9 +685,17 @@
         text-align: center;
       }
       
-      /* Remove overlay on mobile for better image visibility */
+      /* Simplify overlay on mobile */
       .phase-section::before {
-        display: none;
+        background: linear-gradient(180deg, 
+          rgba(10,10,15,0.7) 0%, 
+          rgba(10,10,15,0.9) 100%);
+      }
+      
+      .phase-section:nth-child(even)::before {
+        background: linear-gradient(180deg, 
+          rgba(18,18,26,0.7) 0%, 
+          rgba(18,18,26,0.9) 100%);
       }
       
       /* Simplify animations on mobile - fade up instead of slide sideways */
@@ -552,6 +713,11 @@
     @media (max-width: 768px) {
       .hero-section {
         padding: 60px 20px;
+      }
+      
+      /* Simplify light effects on mobile for better performance */
+      .hero-section::before {
+        opacity: 0.3;
       }
       
       .hero-logo {
@@ -711,7 +877,7 @@
         </h2>
         <p class="phase-description"
            data-en="Experience the "6 Degrees of RIPPLE"—a global relay showing how emotional gestures can travel through robots across cities from Tokyo to Sydney, demonstrating technology's power to reconnect us when designed with intention."
-           data-ja="「6 Degrees of RIPPLE」を体験してください。東京からシドニーまで、都市を越えてロボットを通じて感情的なジェスチャーが伝わるグローバルリレー。意図を持ってデザインされたテクノロジーが私たちを再接続する力を示します。">
+           data-ja="「6 Degrees of RIPPLE」を体験してください。東京からアメリカまで、都市を越えてロボットを通じて感情的なジェスチャーが伝わるグローバルリレー。意図を持ってデザインされたテクノロジーが私たちを再接続する力を示します。">
           Experience the "6 Degrees of RIPPLE"—a global relay showing how emotional gestures can travel through robots across cities from Tokyo to Sydney, demonstrating technology's power to reconnect us when designed with intention.
         </p>
         <a class="button" href="https://youtu.be/YOUR_SECOND_VIDEO_ID" target="_blank" rel="noopener">
